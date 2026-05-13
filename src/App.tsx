@@ -4,8 +4,8 @@ const ManhattanMap = lazy(() => import('./ManhattanMap'))
 
 function StarDivider() {
   return (
-    <div className="star-divider">
-      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="star-divider" role="presentation">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <polygon points="20,4 26,18 14,18" stroke="currentColor" strokeWidth="1.2" fill="none" style={{ color: 'var(--gold)' }} />
         <polygon points="20,36 14,22 26,22" stroke="currentColor" strokeWidth="1.2" fill="none" style={{ color: 'var(--gold)' }} />
       </svg>
@@ -15,7 +15,7 @@ function StarDivider() {
 
 function ArrowIcon() {
   return (
-    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
@@ -56,7 +56,7 @@ function FadeSection({ children, className = '' }: { children: React.ReactNode; 
 
 function PostcardStamp() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <polygon points="12,2 15,10 9,10" stroke="currentColor" strokeWidth="1" fill="none" />
       <polygon points="12,22 9,14 15,14" stroke="currentColor" strokeWidth="1" fill="none" />
     </svg>
@@ -90,29 +90,33 @@ function Postcard({ tag, stat, quote, children }: {
 
 export default function App() {
   return (
-    <>
+    <main>
       {/* HERO */}
       <section className="hero">
         <div className="hero-inner">
           <div className="hero-text">
             <p className="hero-eyebrow">A new book by Andrew Waxman</p>
             <h1 className="hero-title">
-              Find My <em>Synagogue</em>
+              My Year in New York <em>Synagogues</em>
             </h1>
-            <p className="hero-subtitle">A Manhattan Guide</p>
+            <p className="hero-subtitle">A Personal Guide</p>
             <p className="hero-tagline">
               Part journal, part guide&mdash;one man&rsquo;s year-long journey through the most
               remarkable concentration of synagogues ever assembled in a single city.
             </p>
-            <a href="https://www.amazon.com/s?k=find+my+synagogue+andrew+waxman" target="_blank" rel="noopener noreferrer" className="hero-cta">
+            <a href="https://www.amazon.com/s?k=my+year+in+new+york+synagogues+andrew+waxman" target="_blank" rel="noopener noreferrer" className="hero-cta">
               Get Your Copy <ArrowIcon />
             </a>
           </div>
           <div className="hero-book">
             <div className="book-wrapper">
               <img
-                src="/book-front.png"
-                alt="Find My Synagogue — A Manhattan Guide book cover"
+                src="/book-front.jpg"
+                alt="My Year in New York Synagogues — A Personal Guide book cover"
+                width={1750}
+                height={2700}
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
           </div>
@@ -130,26 +134,26 @@ export default function App() {
             <div className="about-book-content">
               <div>
                 <p>
-                  Andrew Waxman had been going to the same New York synagogue for years.
-                  But what if he went to a different one each week? And so, with his kids
-                  off at college, he finally had the time&mdash;and took his chances.
+                  Andrew Waxman had been going to the same New York synagogue for
+                  years. But what if he went to a different one each week? And so,
+                  with his kids in college, he took his chances.
                 </p>
                 <p>
-                  &ldquo;My Year in New York Synagogues&rdquo; chronicles the many different
-                  synagogues Waxman encountered&mdash;from grand historic landmarks to intimate
-                  neighborhood congregations, each with its own character, traditions, and community.
+                  Part journal, part guide, &ldquo;My Year in New York
+                  Synagogues&rdquo; chronicles the many different synagogues Waxman
+                  encountered. For those looking for a synagogue in New York to
+                  make their home, this book may help.
                 </p>
               </div>
               <div>
                 <div className="pull-quote">
-                  &ldquo;For those curious about what is probably the greatest diversity of
-                  synagogues ever assembled in a concentrated single physical location,
-                  this will be of great interest.&rdquo;
+                  Probably the greatest diversity of synagogues ever assembled in a
+                  concentrated single physical location.
                 </div>
                 <p>
-                  For those looking for a synagogue in New York to make their home, this book
-                  may help. And for those tired of going to synagogue, they can simply pick up
-                  Waxman&rsquo;s book and be transported to the action from their living room.
+                  For those tired of going to synagogue, they can simply pick up
+                  Waxman&rsquo;s book and be transported to the action from their
+                  living room.
                 </p>
               </div>
             </div>
@@ -159,63 +163,54 @@ export default function App() {
 
       <StarDivider />
 
-      {/* FEATURES */}
-      <section className="features">
+      {/* TESTIMONIALS */}
+      <section className="testimonials">
         <FadeSection>
           <div className="section-inner">
-            <p className="section-label">What Makes This Book Special</p>
-            <h2 className="section-heading">Three Books in One</h2>
-            <div className="features-grid">
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 40V12a4 4 0 014-4h24a4 4 0 014 4v28" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M8 40h32" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M16 16h16M16 22h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    <rect x="16" y="28" width="6" height="8" rx="1" stroke="currentColor" strokeWidth="1.2" />
-                  </svg>
-                </div>
-                <h3 className="feature-title">A Personal Journal</h3>
-                <p className="feature-text">
-                  Warm, candid reflections from each week&rsquo;s visit&mdash;the atmosphere,
-                  the people, the sermons, and the unexpected moments of connection.
-                </p>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="20" r="8" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M24 28v12" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M18 34h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    <path d="M10 40a14 14 0 0128 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 3" />
-                  </svg>
-                </div>
-                <h3 className="feature-title">A Practical Guide</h3>
-                <p className="feature-text">
-                  Looking for your spiritual home in Manhattan? Navigate the incredible
-                  diversity of congregations with a trusted companion who&rsquo;s been to them all.
-                </p>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M24 8l4 8 8 2-6 6 2 8-8-4-8 4 2-8-6-6 8-2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                    <path d="M12 38c4-2 8-2 12-2s8 0 12 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <h3 className="feature-title">A Cultural Portrait</h3>
-                <p className="feature-text">
-                  An unprecedented exploration of the greatest diversity of synagogues
-                  ever assembled in one place&mdash;a living tapestry of tradition and community.
-                </p>
-              </div>
+            <p className="section-label">Praise for the Book</p>
+            <h2 className="section-heading">What Readers Are Saying</h2>
+            <div className="testimonials-grid">
+              <figure className="testimonial">
+                <blockquote className="testimonial-quote">
+                  Every type of synagogue known can be found in the few square
+                  miles of Manhattan that flank Central Park. Andrew Waxman&rsquo;s
+                  shabbat wandering takes us on a tour of them all. This charming
+                  guide takes us into each synagogue and tells us about the
+                  community, its approach to Judaism, its building and its history.
+                  The variety of Jewish expression is eye opening and Andrew lays
+                  it all out for the reader. All readers&mdash;from the regular
+                  synagogue goer to the curious non-Jew&mdash;will find much to be
+                  learned and enjoyed.
+                </blockquote>
+                <figcaption className="testimonial-attribution">
+                  <span className="testimonial-name">Paul Wachtel</span>
+                  <span className="testimonial-title">Professor Emeritus, New York University</span>
+                </figcaption>
+              </figure>
+              <figure className="testimonial">
+                <blockquote className="testimonial-quote">
+                  This book will rapidly prove to be an indispensable guide for New
+                  Yorkers trying to choose a synagogue, as well as tourists with
+                  more occasional interests. The author&rsquo;s engaging personal
+                  touch is apparent on every page and makes the guide a pleasure
+                  to read, much like a well written travel book.
+                </blockquote>
+                <figcaption className="testimonial-attribution">
+                  <span className="testimonial-name">Dr. Yehudah Cohn</span>
+                  <span className="testimonial-title">
+                    Author of <em>Tangled Up in Text: Tefillin and the Ancient World</em>
+                    {' '}(Brown Judaic Studies) and <em>Mine is the Golden Tongue:
+                    The Hebrew Sonnets of Immanuel of Rome</em> (CPL Editions)
+                  </span>
+                </figcaption>
+              </figure>
             </div>
           </div>
         </FadeSection>
       </section>
 
       {/* MAP */}
-      <Suspense fallback={null}>
+      <Suspense fallback={<section className="map-section map-section--placeholder" aria-hidden="true" />}>
         <ManhattanMap />
       </Suspense>
 
@@ -277,28 +272,34 @@ export default function App() {
             <div className="author-content">
               <div>
                 <p>
-                  Andrew Waxman grew up in the suburbs of Manchester, England, later living
-                  in London, and then New York. He has degrees in history and urban planning
-                  from London University.
+                  Andrew Waxman grew up in the suburbs of Manchester, England,
+                  later living in London, and then New York. He has degrees in
+                  history and urban planning from London University.
                 </p>
                 <p>
-                  His love of synagogue life has only increased in time, and he has long
-                  sought to pass this love on to his children. &ldquo;Find My Synagogue&rdquo;
-                  is his attempt to do just that&mdash;and a testament to the communities that
-                  make Manhattan&rsquo;s Jewish life so extraordinary.
+                  &ldquo;My Year in New York Synagogues &mdash; A Personal
+                  Guide&rdquo; is Mr. Waxman&rsquo;s third book, following
+                  &ldquo;Shops and Land&rdquo; and &ldquo;Rogues of Wall Street.&rdquo;
                 </p>
               </div>
               <div>
                 <p>
-                  &ldquo;Find My Synagogue &mdash; A Manhattan Guide&rdquo; is Mr. Waxman&rsquo;s
-                  third book, following his earlier works on the intersection of history,
-                  place, and people.
+                  His love of synagogue life has only increased over time, and he
+                  has long sought to pass this love on to his children. This is
+                  his last ditch attempt to do so.
                 </p>
                 <div className="author-books">
                   <p className="author-books-label">Also by Andrew Waxman</p>
                   <div className="author-books-list">
                     <span className="book-tag">Shops and Land</span>
-                    <span className="book-tag">Rogues of Wall Street</span>
+                    <a
+                      href="https://www.amazon.com/Rogues-Wall-Street-Manage-Cognitive-ebook/dp/B06Y4XR8LD"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="book-tag book-tag--link"
+                    >
+                      Rogues of Wall Street
+                    </a>
                   </div>
                 </div>
               </div>
@@ -318,7 +319,7 @@ export default function App() {
               curious about one of the world&rsquo;s most vibrant Jewish communities,
               this book is your invitation.
             </p>
-            <a href="https://www.amazon.com/s?k=find+my+synagogue+andrew+waxman" target="_blank" rel="noopener noreferrer" className="cta-button">
+            <a href="https://www.amazon.com/s?k=my+year+in+new+york+synagogues+andrew+waxman" target="_blank" rel="noopener noreferrer" className="cta-button">
               Order Now <ArrowIcon />
             </a>
           </div>
@@ -329,6 +330,6 @@ export default function App() {
       <footer className="footer">
         &copy; {new Date().getFullYear()} Andrew Waxman. All rights reserved.
       </footer>
-    </>
+    </main>
   )
 }
