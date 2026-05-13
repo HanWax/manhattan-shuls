@@ -1,6 +1,58 @@
-import { useEffect, useRef, lazy, Suspense } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense, Component } from 'react'
+import type { ReactNode } from 'react'
 
 const ManhattanMap = lazy(() => import('./ManhattanMap'))
+
+class MapErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false }
+
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: unknown) {
+    console.error('ManhattanMap failed to load:', error)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <section className="map-section" aria-labelledby="map-heading-fallback">
+          <div className="map-section-inner">
+            <div className="map-text">
+              <p className="section-label">Explore the Journey</p>
+              <h2 id="map-heading-fallback" className="section-heading">A&nbsp;Walk Through Manhattan</h2>
+              <p className="map-description">
+                From Washington Heights to the Financial District, across the Upper West Side
+                to the Lower East Side&mdash;the book visits more than twenty synagogues
+                across Manhattan&rsquo;s neighborhoods.
+              </p>
+              <p className="map-count">
+                <span className="map-count-number">20+</span>
+                <span className="map-count-label">Synagogues explored across Manhattan&rsquo;s neighborhoods</span>
+              </p>
+            </div>
+            <div className="map-container map-container--fallback">
+              <div className="map-fallback map-fallback--boundary" role="status">
+                <p className="map-fallback-title">Interactive map unavailable</p>
+                <p className="map-fallback-text">
+                  <a
+                    href="https://www.google.com/maps/search/synagogues+manhattan/@40.758,-73.985,12z"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View on Google Maps
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+    return this.props.children
+  }
+}
 
 function StarDivider() {
   return (
@@ -88,6 +140,36 @@ function Postcard({ tag, stat, quote, children }: {
   )
 }
 
+function HeroBookImage() {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return (
+      <div className="book-wrapper book-wrapper--fallback" role="img" aria-label="My Year in New York Synagogues — A Personal Guide book cover">
+        <div className="book-fallback">
+          <span className="book-fallback-eyebrow">A Personal Guide</span>
+          <span className="book-fallback-title">My Year in New York <em>Synagogues</em></span>
+          <span className="book-fallback-author">Andrew Waxman</span>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="book-wrapper">
+      <img
+        src="/book-front.jpg"
+        alt="My Year in New York Synagogues — A Personal Guide book cover"
+        width={1750}
+        height={2700}
+        fetchPriority="high"
+        decoding="async"
+        onError={() => setFailed(true)}
+      />
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <main>
@@ -109,16 +191,7 @@ export default function App() {
             </a>
           </div>
           <div className="hero-book">
-            <div className="book-wrapper">
-              <img
-                src="/book-front.jpg"
-                alt="My Year in New York Synagogues — A Personal Guide book cover"
-                width={1750}
-                height={2700}
-                fetchPriority="high"
-                decoding="async"
-              />
-            </div>
+            <HeroBookImage />
           </div>
         </div>
       </section>
@@ -210,9 +283,11 @@ export default function App() {
       </section>
 
       {/* MAP */}
-      <Suspense fallback={<section className="map-section map-section--placeholder" aria-hidden="true" />}>
-        <ManhattanMap />
-      </Suspense>
+      <MapErrorBoundary>
+        <Suspense fallback={<section className="map-section map-section--placeholder" aria-hidden="true" />}>
+          <ManhattanMap />
+        </Suspense>
+      </MapErrorBoundary>
 
       <StarDivider />
 

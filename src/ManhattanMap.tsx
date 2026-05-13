@@ -1,6 +1,14 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+
+// Manhattan bounds — keeps panning within the borough
+const MANHATTAN_BOUNDS = L.latLngBounds(
+  L.latLng(40.68, -74.04),
+  L.latLng(40.88, -73.91)
+)
+
+const TILE_ERROR_THRESHOLD = 4
 
 // Placeholder synagogue locations scattered across Manhattan neighborhoods
 const SYNAGOGUES = [
@@ -52,9 +60,13 @@ function createPulseMarker() {
 export default function ManhattanMap() {
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstanceRef = useRef<L.Map | null>(null)
+  const [tilesFailed, setTilesFailed] = useState(false)
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return
+
+    const timers: number[] = []
+    let tileErrorCount = 0
 
     const map = L.map(mapRef.current, {
       center: [40.758, -73.985],
@@ -64,13 +76,22 @@ export default function ManhattanMap() {
       scrollWheelZoom: false,
       dragging: true,
       doubleClickZoom: false,
+      maxBounds: MANHATTAN_BOUNDS,
+      maxBoundsViscosity: 0.8,
     })
 
     // Use a muted, warm-toned tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       maxZoom: 17,
       minZoom: 11,
     }).addTo(map)
+
+    tiles.on('tileerror', () => {
+      tileErrorCount += 1
+      if (tileErrorCount >= TILE_ERROR_THRESHOLD) {
+        setTilesFailed(true)
+      }
+    })
 
     // Add attribution manually for cleaner placement
     L.control.attribution({ position: 'bottomright', prefix: false })
@@ -94,10 +115,11 @@ export default function ManhattanMap() {
         el.style.opacity = '0'
         el.style.transition = 'opacity 0.5s ease, transform 0.5s ease'
         el.style.transform = 'scale(0.3)'
-        setTimeout(() => {
+        const id = window.setTimeout(() => {
           el.style.opacity = '1'
           el.style.transform = 'scale(1)'
         }, 300 + i * 80)
+        timers.push(id)
       }
 
       marker.bindTooltip(s.name, {
@@ -113,17 +135,18 @@ export default function ManhattanMap() {
     mapInstanceRef.current = map
 
     return () => {
+      timers.forEach((id) => window.clearTimeout(id))
       map.remove()
       mapInstanceRef.current = null
     }
   }, [])
 
   return (
-    <section className="map-section">
+    <section className="map-section" aria-labelledby="map-heading">
       <div className="map-section-inner">
         <div className="map-text">
           <p className="section-label">Explore the Journey</p>
-          <h2 className="section-heading">A&nbsp;Walk Through Manhattan</h2>
+          <h2 id="map-heading" className="section-heading">A&nbsp;Walk Through Manhattan</h2>
           <p className="map-description">
             From Washington Heights to the Financial District, across the Upper West Side
             to the Lower East Side&mdash;each dot marks a synagogue visited, a community
@@ -135,8 +158,28 @@ export default function ManhattanMap() {
           </p>
         </div>
         <div className="map-container">
-          <div ref={mapRef} className="map" />
-          <div className="map-overlay-border" />
+          <div
+            ref={mapRef}
+            className="map"
+            role="img"
+            aria-label="Map of Manhattan with markers indicating synagogue locations across neighborhoods from Washington Heights to the Financial District"
+          />
+          <div className="map-overlay-border" aria-hidden="true" />
+          {tilesFailed && (
+            <div className="map-fallback" role="status">
+              <p className="map-fallback-title">Map tiles unavailable</p>
+              <p className="map-fallback-text">
+                The street map couldn&rsquo;t load.{' '}
+                <a
+                  href="https://www.google.com/maps/search/synagogues+manhattan/@40.758,-73.985,12z"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View on Google Maps
+                </a>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>

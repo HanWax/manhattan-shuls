@@ -226,6 +226,63 @@ img { max-width: 100%; display: block; }
     -1px 0 3px rgba(26, 39, 68, 0.05);
 }
 
+/* Fallback "cover" shown if the JPG fails to load */
+.book-wrapper--fallback {
+  aspect-ratio: 1750 / 2700;
+}
+
+.book-fallback {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1750 / 2700;
+  background:
+    linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 12% 14%;
+  border-radius: 2px;
+  box-shadow:
+    12px 12px 40px rgba(26, 39, 68, 0.2),
+    4px 4px 12px rgba(26, 39, 68, 0.1),
+    -1px 0 3px rgba(26, 39, 68, 0.05),
+    inset 0 0 0 1px rgba(196, 151, 59, 0.25);
+  gap: 14px;
+}
+
+.book-fallback-eyebrow {
+  font-family: var(--ff-sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.book-fallback-title {
+  font-family: var(--ff-display);
+  font-size: 1.7rem;
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--cream);
+}
+
+.book-fallback-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.book-fallback-author {
+  font-family: var(--ff-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-top: auto;
+}
+
 /* Book spine effect */
 .book-wrapper::before {
   content: '';
@@ -447,6 +504,9 @@ section {
   width: 100%;
   height: 100%;
   z-index: 1;
+  /* Let the browser handle vertical page scroll on touch so the map
+     doesn't trap a one-finger pan inside its 400-520px height. */
+  touch-action: pan-y pinch-zoom;
 }
 
 .map-overlay-border {
@@ -455,6 +515,65 @@ section {
   border: 1px solid rgba(196, 151, 59, 0.15);
   pointer-events: none;
   z-index: 2;
+}
+
+/* ===== MAP FALLBACK (tile errors or chunk load failure) ===== */
+.map-container--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-fallback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  background: var(--cream);
+  border: 1px solid var(--gold-faint);
+  padding: 24px 28px;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 6px 24px rgba(26, 39, 68, 0.08);
+}
+
+.map-fallback--boundary {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  box-shadow: none;
+}
+
+.map-fallback-title {
+  font-family: var(--ff-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.map-fallback-text {
+  font-family: var(--ff-body);
+  font-size: 0.95rem;
+  color: var(--text-body);
+  line-height: 1.5;
+}
+
+.map-fallback-text a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+}
+
+.map-fallback-text a:hover,
+.map-fallback-text a:focus-visible {
+  color: var(--gold);
+  outline: none;
 }
 
 /* Leaflet custom styles */
