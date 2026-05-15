@@ -131,7 +131,6 @@ function Postcard({ tag, stat, quote, children }: {
         <p className={quote ? 'postcard-text--quote' : 'postcard-text'}>
           {children}
         </p>
-        <p className="postcard-placeholder">Placeholder &mdash; replace with real content</p>
         <div className="postcard-lines">
           <span /><span /><span />
         </div>
