@@ -185,7 +185,7 @@ export default function App() {
               Part journal, part guide&mdash;one man&rsquo;s year-long journey through the most
               remarkable concentration of synagogues ever assembled in a single city.
             </p>
-            <a href="https://www.amazon.com/s?k=my+year+in+new+york+synagogues+andrew+waxman" target="_blank" rel="noopener noreferrer" className="hero-cta">
+            <a href="https://www.amazon.com/My-Year-New-York-Synagogues/dp/B0H3FFM8DW/ref=sr_1_1?crid=1XASJSZJR2ALZ&dib=eyJ2IjoiMSJ9.HNCzpQ4fKNmy6VzSrLvOXA.R3c_6PGXR_bwNOAf35UHUXI5opT10aoIRmsBt2WVjoM&dib_tag=se&keywords=My+Year+in+New+York+Synagogues%3A+A+Personal+Guide&nsdOptOutParam=true&qid=1782461855&sprefix=my+year+in+new+york+synagogues+a+personal+guide%2Caps%2C254&sr=8-1" target="_blank" rel="noopener noreferrer" className="hero-cta">
               Get Your Copy <ArrowIcon />
             </a>
           </div>
@@ -393,7 +393,7 @@ export default function App() {
               curious about one of the world&rsquo;s most vibrant Jewish communities,
               this book is your invitation.
             </p>
-            <a href="https://www.amazon.com/s?k=my+year+in+new+york+synagogues+andrew+waxman" target="_blank" rel="noopener noreferrer" className="cta-button">
+            <a href="https://www.amazon.com/My-Year-New-York-Synagogues/dp/B0H3FFM8DW/ref=sr_1_1?crid=1XASJSZJR2ALZ&dib=eyJ2IjoiMSJ9.HNCzpQ4fKNmy6VzSrLvOXA.R3c_6PGXR_bwNOAf35UHUXI5opT10aoIRmsBt2WVjoM&dib_tag=se&keywords=My+Year+in+New+York+Synagogues%3A+A+Personal+Guide&nsdOptOutParam=true&qid=1782461855&sprefix=my+year+in+new+york+synagogues+a+personal+guide%2Caps%2C254&sr=8-1" target="_blank" rel="noopener noreferrer" className="cta-button">
               Order Now <ArrowIcon />
             </a>
           </div>
@@ -403,6 +403,17 @@ export default function App() {
       {/* FOOTER */}
       <footer className="footer">
         &copy; {new Date().getFullYear()} Andrew Waxman. All rights reserved.
+        <p className="footer-credit">
+          Website built by Hannah Waxman &middot;{" "}
+          <a
+            href="https://tonicolabs.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            tonicolabs.com
+          </a>{" "}
+          &middot; get in touch for your own website
+        </p>
       </footer>
     </main>
   )

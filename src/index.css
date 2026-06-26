@@ -1077,6 +1077,27 @@ section {
   letter-spacing: 0.08em;
 }
 
+.footer-credit {
+  margin-top: 14px;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: rgba(250, 246, 238, 0.32);
+}
+
+.footer-credit a {
+  color: var(--gold-light);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 151, 59, 0.45);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer-credit a:hover,
+.footer-credit a:focus-visible {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  outline: none;
+}
+
 /* Map skeleton — reserves space while the lazy chunk loads */
 .map-section--placeholder {
   min-height: 680px;
