@@ -212,19 +212,20 @@ export default function App() {
                 </p>
                 <p>
                   Part journal, part guide, &ldquo;My Year in New York
-                  Synagogues&rdquo; chronicles the many different synagogues Waxman
-                  encountered. For those looking for a synagogue in New York to
+                  Synagogues,&rdquo; chronicles the many different synagogues Waxman
+                  encountered. For those looking for a synagogue in New York, to
                   make their home, this book may help.
                 </p>
               </div>
               <div>
-                <div className="pull-quote">
-                  Probably the greatest diversity of synagogues ever assembled in a
-                  concentrated single physical location.
-                </div>
+                <p>
+                  For those curious about what is probably the greatest diversity
+                  of synagogues ever assembled in a concentrated single physical
+                  location, this will also be of great interest.
+                </p>
                 <p>
                   For those tired of going to synagogue, they can simply pick up
-                  Waxman&rsquo;s book and be transported to the action from their
+                  Waxman&rsquo;s book, and be transported to the action from their
                   living room.
                 </p>
               </div>
@@ -250,8 +251,8 @@ export default function App() {
                   guide takes us into each synagogue and tells us about the
                   community, its approach to Judaism, its building and its history.
                   The variety of Jewish expression is eye opening and Andrew lays
-                  it all out for the reader. All readers&mdash;from the regular
-                  synagogue goer to the curious non-Jew&mdash;will find much to be
+                  it all out for the reader. All readers &ndash; from the regular
+                  synagogue goer to the curious non-Jew &ndash; will find much to be
                   learned and enjoyed.
                 </blockquote>
                 <figcaption className="testimonial-attribution">
@@ -271,7 +272,7 @@ export default function App() {
                   <span className="testimonial-name">Dr. Yehudah Cohn</span>
                   <span className="testimonial-title">
                     Author of <em>Tangled Up in Text: Tefillin and the Ancient World</em>
-                    {' '}(Brown Judaic Studies) and <em>Mine is the Golden Tongue:
+                    {' '}(Brown Judaic studies), and <em>Mine is the Golden Tongue:
                     The Hebrew Sonnets of Immanuel of Rome</em> (CPL Editions)
                   </span>
                 </figcaption>
@@ -346,20 +347,20 @@ export default function App() {
             <div className="author-content">
               <div>
                 <p>
-                  Andrew Waxman grew up in the suburbs of Manchester, England,
+                  Mr. Waxman grew up in the suburbs of Manchester, England,
                   later living in London, and then New York. He has degrees in
                   history and urban planning from London University.
                 </p>
                 <p>
-                  &ldquo;My Year in New York Synagogues &mdash; A Personal
-                  Guide&rdquo; is Mr. Waxman&rsquo;s third book, following
-                  &ldquo;Shops and Land&rdquo; and &ldquo;Rogues of Wall Street.&rdquo;
+                  &ldquo;My Year in New York Synagogues- A Personal
+                  Guide,&rdquo; is Mr. Waxman&rsquo;s third book. His prior works
+                  are: &ldquo;Shops and Land&rdquo; and &ldquo;Rogues of Wall Street.&rdquo;
                 </p>
               </div>
               <div>
                 <p>
-                  His love of synagogue life has only increased over time, and he
-                  has long sought to pass this love on to his children. This is
+                  His love of synagogue life has only increased over time and has
+                  long sought to pass this love on to his children. This is
                   his last ditch attempt to do so.
                 </p>
                 <div className="author-books">
