@@ -139,6 +139,164 @@ function Postcard({ tag, stat, quote, children }: {
   )
 }
 
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
+
+function ContactSection() {
+  const [status, setStatus] = useState<FormStatus>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (status === 'submitting') return
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY
+    if (!accessKey) {
+      setErrorMessage('The contact form is not configured yet.')
+      setStatus('error')
+      return
+    }
+
+    const form = event.currentTarget
+    const data = new FormData(form)
+    const name = ((data.get('name') as string) ?? '').trim()
+    const email = ((data.get('email') as string) ?? '').trim()
+    const subject = ((data.get('subject') as string) ?? '').trim()
+    const message = ((data.get('message') as string) ?? '').trim()
+
+    // Web3Forms delivers the submission by email to the inbox tied to the access
+    // key. `from_name`/`subject` shape the email; the `email` field becomes the
+    // reply-to; a non-empty `botcheck` (our honeypot) is rejected as spam.
+    const payload = {
+      access_key: accessKey,
+      from_name: 'My Year in New York Synagogues',
+      subject: subject
+        ? `[Website] ${subject} — ${name}`
+        : `[Website] Speaking / interview inquiry — ${name}`,
+      name,
+      email,
+      message,
+      botcheck: (data.get('botcheck') as string) ?? '',
+    }
+
+    setStatus('submitting')
+    setErrorMessage('')
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const result = await res.json().catch(() => ({}))
+
+      if (!res.ok || !result.success) {
+        throw new Error(result.message || 'Your message could not be sent.')
+      }
+
+      form.reset()
+      setStatus('success')
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : 'Your message could not be sent.')
+      setStatus('error')
+    }
+  }
+
+  return (
+    <section className="contact" id="contact">
+      <FadeSection>
+        <div className="section-inner">
+          <p className="section-label">Speaking &amp; Interviews</p>
+          <h2 className="section-heading">Invite Andrew</h2>
+          <p className="contact-intro">
+            Andrew is glad to speak with book clubs, congregations, and podcasts, or to
+            sit down for an interview about the year he spent among Manhattan&rsquo;s
+            synagogues. Send a note and he&rsquo;ll be in touch.
+          </p>
+
+          {status === 'success' ? (
+            <div className="contact-success" role="status">
+              <p className="contact-success-title">Thank you&mdash;your message is on its way.</p>
+              <p className="contact-success-text">
+                Andrew reads every note personally and will get back to you soon.
+              </p>
+            </div>
+          ) : (
+            <form className="contact-form" onSubmit={handleSubmit} noValidate>
+              <div className="contact-row">
+                <label className="contact-field">
+                  <span className="contact-label">Name</span>
+                  <input
+                    type="text"
+                    name="name"
+                    autoComplete="name"
+                    required
+                    maxLength={120}
+                    disabled={status === 'submitting'}
+                  />
+                </label>
+                <label className="contact-field">
+                  <span className="contact-label">Email</span>
+                  <input
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    required
+                    maxLength={200}
+                    disabled={status === 'submitting'}
+                  />
+                </label>
+              </div>
+
+              <label className="contact-field">
+                <span className="contact-label">
+                  Subject <span className="contact-optional">(optional)</span>
+                </span>
+                <input
+                  type="text"
+                  name="subject"
+                  placeholder="Speaking engagement, interview, book club&hellip;"
+                  maxLength={160}
+                  disabled={status === 'submitting'}
+                />
+              </label>
+
+              <label className="contact-field">
+                <span className="contact-label">Message</span>
+                <textarea
+                  name="message"
+                  rows={5}
+                  required
+                  maxLength={4000}
+                  disabled={status === 'submitting'}
+                />
+              </label>
+
+              {/* Honeypot — hidden from users; Web3Forms rejects if filled. */}
+              <div className="contact-honeypot" aria-hidden="true">
+                <label>
+                  Company
+                  <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
+                </label>
+              </div>
+
+              {status === 'error' && (
+                <p className="contact-error" role="alert">
+                  {errorMessage}
+                </p>
+              )}
+
+              <button type="submit" className="cta-button" disabled={status === 'submitting'}>
+                {status === 'submitting' ? 'Sending…' : 'Send Message'}
+                {status !== 'submitting' && <ArrowIcon />}
+              </button>
+            </form>
+          )}
+        </div>
+      </FadeSection>
+    </section>
+  )
+}
+
 function HeroBookImage() {
   const [failed, setFailed] = useState(false)
 
@@ -382,6 +540,9 @@ export default function App() {
           </div>
         </FadeSection>
       </section>
+
+      {/* CONTACT / INVITE ANDREW */}
+      <ContactSection />
 
       {/* FINAL CTA */}
       <section className="final-cta">
