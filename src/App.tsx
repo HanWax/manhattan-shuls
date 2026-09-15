@@ -297,6 +297,101 @@ function ContactSection() {
   )
 }
 
+// One story, written for the JTA wire, then picked up by papers that subscribe
+// to it. Only the original carries a byline; the pickups are listed by outlet.
+const PRESS_ORIGINAL = {
+  outlet: 'Jewish Telegraphic Agency',
+  headline: 'He went to a different Manhattan synagogue every week. Here\u2019s what it taught him.',
+  byline: 'Andrew Silow-Carroll, editor-in-chief of JTA',
+  date: 'September 6, 2026',
+  url: 'https://www.jta.org/2026/09/06/culture/he-went-to-a-different-manhattan-synagogue-every-week-heres-what-it-taught-him',
+}
+
+const PRESS_PICKUPS = [
+  {
+    outlet: 'The Times of Israel',
+    // Run under its own headline, so it is worth showing.
+    headline: 'New \u2018Yelp guide for synagogues\u2019 in Manhattan showcases Big Apple\u2019s Jewish diversity',
+    url: 'https://www.timesofisrael.com/new-yelp-guide-for-synagogues-in-manhattan-showcases-big-apples-jewish-diversity/',
+  },
+  {
+    outlet: 'Intermountain Jewish News',
+    headline: 'All of New York\u2019s Synagogues',
+    url: 'https://www.ijn.com/50-new-york-synagogues-andrew-waxman/',
+  },
+  {
+    outlet: 'The Forward',
+    url: 'https://forward.com/fast-forward/848819/he-went-to-a-different-manhattan-synagogue-every-week-heres-what-it-taught-him',
+  },
+  {
+    outlet: 'Cleveland Jewish News',
+    url: 'https://www.clevelandjewishnews.com/jta/he-went-to-a-different-manhattan-synagogue-every-week-here-s-what-it-taught-him/article_facdcdd2-dec0-55e0-af1f-f5edc83f7690.html',
+  },
+]
+
+function NewsSection() {
+  return (
+    <section className="news" id="news" aria-labelledby="news-heading">
+      <FadeSection>
+        <div className="section-inner">
+          <p className="section-label">Andrew in the News</p>
+          <h2 id="news-heading" className="section-heading">Media Coverage</h2>
+          <p className="news-intro">
+            The Jewish Telegraphic Agency sat down with Andrew about his year of
+            shul-hopping. The story went out on the JTA wire and was picked up by
+            Jewish papers in the United States and Israel.
+          </p>
+
+          <article className="news-feature">
+            <p className="news-outlet-name">{PRESS_ORIGINAL.outlet}</p>
+            <h3 className="news-feature-headline">{PRESS_ORIGINAL.headline}</h3>
+            <p className="news-meta">
+              {PRESS_ORIGINAL.byline}
+              <span className="news-meta-dot" aria-hidden="true">&middot;</span>
+              {PRESS_ORIGINAL.date}
+            </p>
+            <blockquote className="news-quote">
+              The impetus for the book really was just the awe in which I find myself
+              around the number of amazing communities, and the diversity that we have
+              in New York that I really think is unparalleled in Jewish history.
+            </blockquote>
+            <p className="news-quote-attribution">Andrew Waxman, to JTA</p>
+            <a
+              className="news-feature-link"
+              href={PRESS_ORIGINAL.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Read the article <ArrowIcon />
+            </a>
+          </article>
+
+          <div className="news-pickups">
+            <p className="news-pickups-label">Also published in</p>
+            <ul className="news-pickups-list">
+              {PRESS_PICKUPS.map((item) => (
+                <li key={item.url} className="news-pickup">
+                  <a
+                    className="news-pickup-link"
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="news-pickup-outlet">{item.outlet}</span>
+                    {item.headline && (
+                      <span className="news-pickup-headline">{item.headline}</span>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </FadeSection>
+    </section>
+  )
+}
+
 function HeroBookImage() {
   const [failed, setFailed] = useState(false)
 
@@ -540,6 +635,11 @@ export default function App() {
           </div>
         </FadeSection>
       </section>
+
+      <StarDivider />
+
+      {/* ANDREW IN THE NEWS */}
+      <NewsSection />
 
       {/* CONTACT / INVITE ANDREW */}
       <ContactSection />

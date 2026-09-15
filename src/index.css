@@ -1021,6 +1021,197 @@ section {
   outline: none;
 }
 
+/* ===== ANDREW IN THE NEWS ===== */
+.news {
+  background: var(--cream);
+  position: relative;
+}
+
+.news::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+
+.news-intro {
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 620px;
+}
+
+.news-outlet-name {
+  font-family: var(--ff-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.news-meta {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.news-meta-dot {
+  margin: 0 8px;
+  color: var(--gold-light);
+}
+
+/* === THE ORIGINAL STORY === */
+.news-feature {
+  margin-top: 44px;
+  padding: 36px 40px 40px;
+  background: var(--white);
+  border-top: 2px solid var(--gold);
+  box-shadow: 0 2px 20px rgba(26, 39, 68, 0.05);
+}
+
+.news-feature-headline {
+  font-family: var(--ff-display);
+  font-size: 1.85rem;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--navy);
+  margin: 14px 0 12px;
+}
+
+.news-quote {
+  font-family: var(--ff-display);
+  font-size: 1.28rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--navy);
+  border-left: 2px solid var(--gold-light);
+  padding-left: 22px;
+  margin: 28px 0 12px;
+  quotes: '\201C' '\201D';
+}
+
+.news-quote::before { content: open-quote; }
+.news-quote::after { content: close-quote; }
+
+.news-quote-attribution {
+  font-family: var(--ff-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-left: 24px;
+  margin-bottom: 28px;
+}
+
+.news-feature-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--ff-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold-light);
+  padding-bottom: 5px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.news-feature-link svg {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.3s ease;
+}
+
+.news-feature-link:hover,
+.news-feature-link:focus-visible {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.news-feature-link:hover svg,
+.news-feature-link:focus-visible svg {
+  transform: translateX(4px);
+}
+
+/* === WHERE THE WIRE STORY RAN === */
+.news-pickups {
+  margin-top: 40px;
+}
+
+.news-pickups-label {
+  font-family: var(--ff-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--cream-dark);
+}
+
+.news-pickups-list {
+  list-style: none;
+}
+
+.news-pickup {
+  border-bottom: 1px solid var(--cream-dark);
+}
+
+.news-pickup-link {
+  display: block;
+  padding: 16px 18px 16px 16px;
+  text-decoration: none;
+  /* Inset shadow rather than a border so hover never shifts the layout. */
+  box-shadow: inset 0 0 0 0 var(--gold);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-pickup-link:hover,
+.news-pickup-link:focus-visible {
+  background: var(--white);
+  box-shadow: inset 3px 0 0 0 var(--gold);
+}
+
+.news-pickup-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+.news-pickup-outlet {
+  display: block;
+  font-family: var(--ff-sans);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  transition: color 0.3s ease;
+}
+
+.news-pickup-headline {
+  display: block;
+  font-family: var(--ff-display);
+  font-size: 1.12rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--navy);
+  margin-top: 6px;
+}
+
+.news-pickup-link:hover .news-pickup-outlet,
+.news-pickup-link:focus-visible .news-pickup-outlet {
+  color: var(--navy);
+}
+
 /* ===== FINAL CTA ===== */
 .final-cta {
   background:
@@ -1343,6 +1534,23 @@ section {
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .news-feature {
+    padding: 28px 24px 32px;
+  }
+
+  .news-feature-headline {
+    font-size: 1.45rem;
+  }
+
+  .news-quote {
+    font-size: 1.12rem;
+    padding-left: 18px;
+  }
+
+  .news-quote-attribution {
+    padding-left: 20px;
   }
 
   .section-heading {
