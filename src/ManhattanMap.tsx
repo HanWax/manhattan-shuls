@@ -81,7 +81,12 @@ export default function ManhattanMap() {
     })
 
     // Use a muted, warm-toned tile layer
-    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    // CARTO requires a (free) key on every tile request; without one it serves
+    // "API key required" placeholder tiles instead of the map.
+    const cartoKey = import.meta.env.VITE_CARTO_KEY
+    const tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+      + (cartoKey ? `?key=${encodeURIComponent(cartoKey)}` : '')
+    const tiles = L.tileLayer(tileUrl, {
       maxZoom: 17,
       minZoom: 11,
     }).addTo(map)
