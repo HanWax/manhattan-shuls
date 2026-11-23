@@ -142,7 +142,7 @@ export default function ManhattanMap() {
   }, [])
 
   return (
-    <section className="map-section" aria-labelledby="map-heading">
+    <section className="map-section" id="map" aria-labelledby="map-heading">
       <div className="map-section-inner">
         <div className="map-text">
           <p className="section-label">Explore the Journey</p>

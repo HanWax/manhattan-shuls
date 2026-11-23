@@ -17,7 +17,7 @@ class MapErrorBoundary extends Component<{ children: ReactNode }, { hasError: bo
   render() {
     if (this.state.hasError) {
       return (
-        <section className="map-section" aria-labelledby="map-heading-fallback">
+        <section className="map-section" id="map" aria-labelledby="map-heading-fallback">
           <div className="map-section-inner">
             <div className="map-text">
               <p className="section-label">Explore the Journey</p>
@@ -340,21 +340,19 @@ const PRESS_PICKUPS = [
 function NewsSection() {
   return (
     <section className="news" id="news" aria-labelledby="news-heading">
-      <FadeSection>
-        <div className="section-inner">
-          <p className="section-label">Andrew in the News</p>
-          <h2 id="news-heading" className="section-heading">Media Coverage</h2>
-          <p className="news-intro">
-            Andrew spoke about the book at Central Synagogue, and the Jewish
-            Telegraphic Agency sat down with him about his year of shul-hopping.
-            The JTA story went out on the wire and was picked up by Jewish papers
-            in the United States and Israel.
-          </p>
-
-          <article className="news-feature">
-            <p className="news-outlet-name">{TALK_VIDEO.host}</p>
-            <h3 className="news-feature-headline">{TALK_VIDEO.title}</h3>
-            <p className="news-meta">{TALK_VIDEO.date}</p>
+      {/* The talk gets its own dark band so it reads as the feature. */}
+      <div className="news-watch">
+        <FadeSection>
+          <div className="news-watch-inner">
+            <p className="section-label">Andrew in the News</p>
+            <h2 id="news-heading" className="section-heading">
+              Watch Andrew at {TALK_VIDEO.host}
+            </h2>
+            <p className="news-watch-meta">
+              {TALK_VIDEO.title}
+              <span className="news-meta-dot" aria-hidden="true">&middot;</span>
+              {TALK_VIDEO.date}
+            </p>
             <div className="news-video">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${TALK_VIDEO.youtubeId}`}
@@ -366,62 +364,185 @@ function NewsSection() {
               />
             </div>
             <a
-              className="news-feature-link"
+              className="news-watch-link"
               href={`https://www.youtube.com/watch?v=${TALK_VIDEO.youtubeId}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               Watch on YouTube <ArrowIcon />
             </a>
-          </article>
+          </div>
+        </FadeSection>
+      </div>
 
-          <article className="news-feature">
-            <p className="news-outlet-name">{PRESS_ORIGINAL.outlet}</p>
-            <h3 className="news-feature-headline">{PRESS_ORIGINAL.headline}</h3>
-            <p className="news-meta">
-              {PRESS_ORIGINAL.byline}
-              <span className="news-meta-dot" aria-hidden="true">&middot;</span>
-              {PRESS_ORIGINAL.date}
+      <div className="news-press">
+        <FadeSection>
+          <div className="section-inner">
+            <p className="section-label">In Print</p>
+            <p className="news-intro">
+              The Jewish Telegraphic Agency sat down with Andrew about his year of
+              shul-hopping. The story went out on the JTA wire and was picked up by
+              Jewish papers in the United States and Israel.
             </p>
-            <blockquote className="news-quote">
-              The impetus for the book really was just the awe in which I find myself
-              around the number of amazing communities, and the diversity that we have
-              in New York that I really think is unparalleled in Jewish history.
-            </blockquote>
-            <p className="news-quote-attribution">Andrew Waxman, to JTA</p>
+
+            <article className="news-feature">
+              <p className="news-outlet-name">{PRESS_ORIGINAL.outlet}</p>
+              <h3 className="news-feature-headline">{PRESS_ORIGINAL.headline}</h3>
+              <p className="news-meta">
+                {PRESS_ORIGINAL.byline}
+                <span className="news-meta-dot" aria-hidden="true">&middot;</span>
+                {PRESS_ORIGINAL.date}
+              </p>
+              <blockquote className="news-quote">
+                The impetus for the book really was just the awe in which I find myself
+                around the number of amazing communities, and the diversity that we have
+                in New York that I really think is unparalleled in Jewish history.
+              </blockquote>
+              <p className="news-quote-attribution">Andrew Waxman, to JTA</p>
+              <a
+                className="news-feature-link"
+                href={PRESS_ORIGINAL.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read the article <ArrowIcon />
+              </a>
+            </article>
+
+            <div className="news-pickups">
+              <p className="news-pickups-label">Also published in</p>
+              <ul className="news-pickups-list">
+                {PRESS_PICKUPS.map((item) => (
+                  <li key={item.url} className="news-pickup">
+                    <a
+                      className="news-pickup-link"
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="news-pickup-outlet">{item.outlet}</span>
+                      {item.headline && (
+                        <span className="news-pickup-headline">{item.headline}</span>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </FadeSection>
+      </div>
+    </section>
+  )
+}
+
+const BOOK_URL = 'https://www.amazon.com/My-Year-New-York-Synagogues/dp/B0H3FFM8DW/ref=sr_1_1?crid=1XASJSZJR2ALZ&dib=eyJ2IjoiMSJ9.HNCzpQ4fKNmy6VzSrLvOXA.R3c_6PGXR_bwNOAf35UHUXI5opT10aoIRmsBt2WVjoM&dib_tag=se&keywords=My+Year+in+New+York+Synagogues%3A+A+Personal+Guide&nsdOptOutParam=true&qid=1782461855&sprefix=my+year+in+new+york+synagogues+a+personal+guide%2Caps%2C254&sr=8-1'
+
+const NAV_LINKS = [
+  { id: 'book', label: 'The Book' },
+  { id: 'news', label: 'In the News' },
+  { id: 'map', label: 'Map' },
+  { id: 'author', label: 'Andrew' },
+  { id: 'contact', label: 'Invite Andrew' },
+]
+
+function SiteNav() {
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState('')
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24)
+      // Back up in the opening section: no nav section is current.
+      if (window.scrollY < window.innerHeight * 0.4) setActive('')
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Underline the link for whichever section is crossing the middle of the screen.
+  // The map loads lazily, so re-scan until every section is on the page.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id)
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    const watched = new Set<Element>()
+    const scan = () => {
+      for (const { id } of NAV_LINKS) {
+        const el = document.getElementById(id)
+        if (el && !watched.has(el)) {
+          watched.add(el)
+          observer.observe(el)
+        }
+      }
+    }
+    scan()
+    const mo = new MutationObserver(scan)
+    mo.observe(document.body, { childList: true, subtree: true })
+    return () => {
+      observer.disconnect()
+      mo.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
+  return (
+    <header className={`site-nav${scrolled || open ? ' site-nav--solid' : ''}`}>
+      <nav className="site-nav-inner" aria-label="Main">
+        <a href="#top" className="site-nav-brand" onClick={() => setOpen(false)}>
+          My Year in New York <em>Synagogues</em>
+        </a>
+        <button
+          type="button"
+          className="site-nav-toggle"
+          aria-expanded={open}
+          aria-controls="site-nav-links"
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span className="visually-hidden">{open ? 'Close menu' : 'Open menu'}</span>
+          <span className="site-nav-toggle-bars" aria-hidden="true" />
+        </button>
+        <ul id="site-nav-links" className={`site-nav-links${open ? ' site-nav-links--open' : ''}`}>
+          {NAV_LINKS.map(({ id, label }) => (
+            <li key={id}>
+              <a
+                href={`#${id}`}
+                className={`site-nav-link${active === id ? ' site-nav-link--active' : ''}`}
+                aria-current={active === id ? 'location' : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+          <li>
             <a
-              className="news-feature-link"
-              href={PRESS_ORIGINAL.url}
+              href={BOOK_URL}
               target="_blank"
               rel="noopener noreferrer"
+              className="site-nav-buy"
             >
-              Read the article <ArrowIcon />
+              Buy the Book
             </a>
-          </article>
-
-          <div className="news-pickups">
-            <p className="news-pickups-label">Also published in</p>
-            <ul className="news-pickups-list">
-              {PRESS_PICKUPS.map((item) => (
-                <li key={item.url} className="news-pickup">
-                  <a
-                    className="news-pickup-link"
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="news-pickup-outlet">{item.outlet}</span>
-                    {item.headline && (
-                      <span className="news-pickup-headline">{item.headline}</span>
-                    )}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </FadeSection>
-    </section>
+          </li>
+        </ul>
+      </nav>
+    </header>
   )
 }
 
@@ -457,7 +578,9 @@ function HeroBookImage() {
 
 export default function App() {
   return (
-    <main>
+    <main id="top">
+      <SiteNav />
+
       {/* HERO */}
       <section className="hero">
         <div className="hero-inner">
@@ -471,8 +594,14 @@ export default function App() {
               Part journal, part guide&mdash;one man&rsquo;s year-long journey through the most
               remarkable concentration of synagogues ever assembled in a single city.
             </p>
-            <a href="https://www.amazon.com/My-Year-New-York-Synagogues/dp/B0H3FFM8DW/ref=sr_1_1?crid=1XASJSZJR2ALZ&dib=eyJ2IjoiMSJ9.HNCzpQ4fKNmy6VzSrLvOXA.R3c_6PGXR_bwNOAf35UHUXI5opT10aoIRmsBt2WVjoM&dib_tag=se&keywords=My+Year+in+New+York+Synagogues%3A+A+Personal+Guide&nsdOptOutParam=true&qid=1782461855&sprefix=my+year+in+new+york+synagogues+a+personal+guide%2Caps%2C254&sr=8-1" target="_blank" rel="noopener noreferrer" className="hero-cta">
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="hero-cta">
               Get Your Copy <ArrowIcon />
+            </a>
+            <a href="#news" className="hero-watch">
+              <span className="hero-watch-play" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor" /></svg>
+              </span>
+              Watch Andrew&rsquo;s talk at Central Synagogue <ArrowIcon />
             </a>
           </div>
           <div className="hero-book">
@@ -484,7 +613,7 @@ export default function App() {
       <StarDivider />
 
       {/* ABOUT THE BOOK */}
-      <section className="about-book">
+      <section className="about-book" id="book">
         <FadeSection>
           <div className="section-inner">
             <p className="section-label">About the Book</p>
@@ -568,6 +697,9 @@ export default function App() {
         </FadeSection>
       </section>
 
+      {/* ANDREW IN THE NEWS */}
+      <NewsSection />
+
       {/* MAP */}
       <MapErrorBoundary>
         <Suspense fallback={<section className="map-section map-section--placeholder" aria-hidden="true" />}>
@@ -625,7 +757,7 @@ export default function App() {
       <StarDivider />
 
       {/* ABOUT THE AUTHOR */}
-      <section className="about-author">
+      <section className="about-author" id="author">
         <FadeSection>
           <div className="section-inner">
             <p className="section-label">About the Author</p>
@@ -669,11 +801,6 @@ export default function App() {
         </FadeSection>
       </section>
 
-      <StarDivider />
-
-      {/* ANDREW IN THE NEWS */}
-      <NewsSection />
-
       {/* CONTACT / INVITE ANDREW */}
       <ContactSection />
 
@@ -688,7 +815,7 @@ export default function App() {
               curious about one of the world&rsquo;s most vibrant Jewish communities,
               this book is your invitation.
             </p>
-            <a href="https://www.amazon.com/My-Year-New-York-Synagogues/dp/B0H3FFM8DW/ref=sr_1_1?crid=1XASJSZJR2ALZ&dib=eyJ2IjoiMSJ9.HNCzpQ4fKNmy6VzSrLvOXA.R3c_6PGXR_bwNOAf35UHUXI5opT10aoIRmsBt2WVjoM&dib_tag=se&keywords=My+Year+in+New+York+Synagogues%3A+A+Personal+Guide&nsdOptOutParam=true&qid=1782461855&sprefix=my+year+in+new+york+synagogues+a+personal+guide%2Caps%2C254&sr=8-1" target="_blank" rel="noopener noreferrer" className="cta-button">
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="cta-button">
               Order Now <ArrowIcon />
             </a>
           </div>
