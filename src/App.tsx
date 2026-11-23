@@ -297,6 +297,14 @@ function ContactSection() {
   )
 }
 
+// Andrew's book talk at Central Synagogue, posted on their YouTube channel.
+const TALK_VIDEO = {
+  host: 'Central Synagogue',
+  title: 'Learn & Lunch: Exploring Synagogues Across New York City',
+  date: 'November 17, 2026',
+  youtubeId: 'lGooWhcP51o',
+}
+
 // One story, written for the JTA wire, then picked up by papers that subscribe
 // to it. Only the original carries a byline; the pickups are listed by outlet.
 const PRESS_ORIGINAL = {
@@ -337,10 +345,35 @@ function NewsSection() {
           <p className="section-label">Andrew in the News</p>
           <h2 id="news-heading" className="section-heading">Media Coverage</h2>
           <p className="news-intro">
-            The Jewish Telegraphic Agency sat down with Andrew about his year of
-            shul-hopping. The story went out on the JTA wire and was picked up by
-            Jewish papers in the United States and Israel.
+            Andrew spoke about the book at Central Synagogue, and the Jewish
+            Telegraphic Agency sat down with him about his year of shul-hopping.
+            The JTA story went out on the wire and was picked up by Jewish papers
+            in the United States and Israel.
           </p>
+
+          <article className="news-feature">
+            <p className="news-outlet-name">{TALK_VIDEO.host}</p>
+            <h3 className="news-feature-headline">{TALK_VIDEO.title}</h3>
+            <p className="news-meta">{TALK_VIDEO.date}</p>
+            <div className="news-video">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${TALK_VIDEO.youtubeId}`}
+                title={TALK_VIDEO.title}
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+            <a
+              className="news-feature-link"
+              href={`https://www.youtube.com/watch?v=${TALK_VIDEO.youtubeId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch on YouTube <ArrowIcon />
+            </a>
+          </article>
 
           <article className="news-feature">
             <p className="news-outlet-name">{PRESS_ORIGINAL.outlet}</p>
